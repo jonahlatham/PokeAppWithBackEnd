@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import axios from 'axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const baseUrl = ''
+
+export default class App extends Component {
+  state = {
+    inputs : {
+      FirstName: '',
+      LastName: '',
+      Age: '',
+    }
+  }
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+  clicks = () => {
+    return <div>
+      {this.state.inputs.FirstName}
+      {this.state.inputs.LirstName}
+      {this.state.inputs.Age}
+  </div>
+  }
+  render() {
+    const loopInputs = Object.keys(this.state.inputs).map((e,i)=>{
+      return <input key ={i} placeholder={e} type='text' name={e} value={this.state[e]} onChange={this.handleChange}/>
+      console.log(e)
+    })
+    return (
+      <div className='App'>
+        <div className='inputs'>
+            {loopInputs}
+            <button onClick={this.clicks}>Display</button>
+        </div>
+      </div>
+    )
+  }
 }
-
-export default App;

@@ -2,10 +2,28 @@
   text-align: center;
 }
 
-.inputs {
-  display: flex;
-  flex-direction: column;
+.pokeCards {
+  width: 200px;
+  min-height: 250px;
+  background: red;
+  box-shadow: 5px 5px 5px gray;
+  margin: 10px;
+  padding-bottom: 15px;
+}
+
+.boxInCard {
   width: 150px;
-  margin: auto;
-  margin-top: 5px;
+  min-height: 160px;
+  background: yellow;
+  margin-top: 20px;
+  margin-left: 25px;
+}
+
+.name {
+  width: 150px;
+  height: 40px;
+  background: blue;
+  color: white;
+  margin-left: 25px;
+  margin-top: 10px;
 }

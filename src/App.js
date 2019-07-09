@@ -2,39 +2,41 @@ import React, { Component } from 'react'
 import './App.css'
 import axios from 'axios'
 
-const baseUrl = ''
-
 export default class App extends Component {
   state = {
-    inputs : {
-      FirstName: '',
-      LastName: '',
-      Age: '',
-    }
+    pokemon: [],
   }
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-  clicks = () => {
-    return <div>
-      {this.state.inputs.FirstName}
-      {this.state.inputs.LirstName}
-      {this.state.inputs.Age}
-  </div>
+  componentDidMount() {
+    axios.get('/api/pokemon')
+      .then((response) => {
+        this.setState({
+          pokemon: response.data
+        })
+        console.log(response.data)
+      })
   }
   render() {
-    const loopInputs = Object.keys(this.state.inputs).map((e,i)=>{
-      return <input key ={i} placeholder={e} type='text' name={e} value={this.state[e]} onChange={this.handleChange}/>
-      console.log(e)
+    const pokeLoop = this.state.pokemon.map((e, i) => {
+      return <div className='pokeCards' key={i}>
+        <div className='name'>
+          {e.name.slice(0, 1).toUpperCase()}{e.name.slice(1)}
+          <br/>
+          ID: {e.id}
+        </div>
+        <div className='boxInCard'>
+          <img src={e.sprites.front_default} alt='pokemon sprite' />
+          <br />
+        Height: {e.height}m
+        <br/>
+        Weight: {e.weight}kg
+        </div>
+      </div>
     })
     return (
       <div className='App'>
-        <div className='inputs'>
-            {loopInputs}
-            <button onClick={this.clicks}>Display</button>
-        </div>
+
+        {pokeLoop}
+
       </div>
     )
   }

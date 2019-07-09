@@ -1,11 +1,31 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.inputs {
-  display: flex;
-  flex-direction: column;
+.pokeCards {
+  width: 200px;
+  height: 250px;
+  background: red;
+  box-shadow: 5px 5px 5px gray;
+  margin: 10px;
+}
+
+.boxInCard {
   width: 150px;
-  margin: auto;
-  margin-top: 5px;
+  height: 150px;
+  background: yellow;
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 25px;
+}
+
+.name {
+  width: 150px;
+  height: 40px;
+  background: blue;
+  color: white;
+  margin-left: 25px;
+  margin-top: 10px;
 }

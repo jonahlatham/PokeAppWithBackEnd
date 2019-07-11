@@ -1,20 +1,35 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .pokeCards {
   width: 200px;
+<<<<<<< HEAD
   min-height: 250px;
   background: red;
   box-shadow: 5px 5px 5px gray;
   margin: 10px;
   padding-bottom: 15px;
+=======
+  height: 250px;
+  background: red;
+  box-shadow: 5px 5px 5px gray;
+  margin: 10px;
+>>>>>>> c9aa60bcc3df8ec195e496aa9247fa069abbde76
 }
 
 .boxInCard {
   width: 150px;
+<<<<<<< HEAD
   min-height: 160px;
   background: yellow;
+=======
+  height: 150px;
+  background: yellow;
+  position: absolute;
+>>>>>>> c9aa60bcc3df8ec195e496aa9247fa069abbde76
   margin-top: 20px;
   margin-left: 25px;
 }

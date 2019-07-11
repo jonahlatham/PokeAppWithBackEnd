@@ -8,10 +8,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 let pokemon = []
-<<<<<<< HEAD
 let caughtPokemon = []
-=======
->>>>>>> c9aa60bcc3df8ec195e496aa9247fa069abbde76
 
 app.get('/api/pokemon/', (request, response, next) => {
     if (pokemon.length === 0) {
@@ -24,17 +21,12 @@ app.get('/api/pokemon/', (request, response, next) => {
                 pokemon = res.map((e, i) => {
                     return e.data
                 })
-<<<<<<< HEAD
                 response.send({pokemon, caughtPokemon})
-=======
-                response.send(pokemon)
->>>>>>> c9aa60bcc3df8ec195e496aa9247fa069abbde76
             })
             .catch((err) => {
                 console.log(err)
             })
     } else {
-<<<<<<< HEAD
         response.send({pokemon, caughtPokemon})
     }
 })
@@ -61,20 +53,10 @@ app.delete('/api/pokemon', (request, response, next)=>{
     response.send(caughtPokemon)
 })
 
-=======
-        response.send(pokemon)
-    }
-})
-
->>>>>>> c9aa60bcc3df8ec195e496aa9247fa069abbde76
 const port = process.env.PORT || 8090
 
 app.listen(port, () => {
     console.log(`Listening on Port ${port}`)
 })
 
-<<<<<<< HEAD
 // http://localhost:8090
-=======
-// http://localhost:8080
->>>>>>> c9aa60bcc3df8ec195e496aa9247fa069abbde76

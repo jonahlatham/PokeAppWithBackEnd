@@ -9,6 +9,7 @@ app.use(cors())
 app.use(bodyParser.json())
 let pokemon = []
 let caughtPokemon = []
+let caughtId = 1
 
 app.get('/api/pokemon/', (request, response, next) => {
     if (pokemon.length === 0) {
@@ -32,24 +33,25 @@ app.get('/api/pokemon/', (request, response, next) => {
 })
 
 app.post('/api/pokemon', (request, response, next) => {
-    let pokemonToAdd = pokemon.reduce((r,e,i)=>{
+    let pokemonToAdd = Object.assign({},pokemon.reduce((r,e,i)=>{
         if(request.body.id === e.id){
             r = e
         }
         return r
-    }, {})
+    }, {}))
+    pokemonToAdd.caughtId=caughtId
+    caughtId++
     caughtPokemon.push(pokemonToAdd)
     response.send(caughtPokemon)
 })
 
 app.delete('/api/pokemon', (request, response, next)=>{
-    let pokemonToRelease = pokemon.filter((e,i) => {
-        if(request.body.id === e.id){
+    caughtPokemon = caughtPokemon.filter((e,i) => {
+        if(Number(request.query.id) === e.caughtId){
             return false
         }
         return e
     })
-    caughtPokemon.splice(request.body.id)
     response.send(caughtPokemon)
 })
 

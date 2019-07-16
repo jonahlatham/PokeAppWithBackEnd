@@ -1,17 +1,8 @@
 import React, { Component } from 'react'
 import './PokeCaughtLoop.css'
-import Axios from 'axios';
 
 class PokeCaughtLoop extends Component {
 
-    // handleRelease = () => {
-    //     axios.delete('/api/pokemon', body)
-    //     .Then((response) => {
-    //         this.setState({
-
-    //         })
-    //     })
-    // }
 
     render() {
 
@@ -29,7 +20,7 @@ class PokeCaughtLoop extends Component {
                     <br />
                     Weight: {e.weight}kg
               </div>
-        <button onClick>Release</button>
+        <button onClick={() => { this.props.handleRelease(e.caughtId, e.name) }}>Release</button>
             </div>
         })
 

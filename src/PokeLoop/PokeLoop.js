@@ -13,7 +13,7 @@ class PokeLoop extends Component {
                 <div className='boxInCard'>
                     <img src={e.sprites.front_default} alt='pokemon sprite' />
                 </div>
-                <button onClick={() => { this.handleCatch(e.id, e.name) }}>Catch</button>
+                <button onClick={() => { this.props.handleCatch(e.id, e.name) }}>Catch</button>
             </div>
         })
         return (

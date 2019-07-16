@@ -3,12 +3,17 @@ import './App.css'
 import axios from 'axios'
 import PokeLoop from './PokeLoop/PokeLoop'
 import PokeCaughtLoop from './PokeCaughtLoop/PokeCaughtLoop'
+import swal from 'sweetalert';
+
 
 export default class App extends Component {
   state = {
     pokemon: [],
     caughtPokemon: [],
     showCaughtPokemon: false,
+    textBox: '',
+    filterCaughtPokemon: [],
+    filterPokemon: [],
   }
   componentDidMount() {
     axios.get('/api/pokemon')
@@ -16,10 +21,46 @@ export default class App extends Component {
         this.setState({
           pokemon: response.data.pokemon,
           caughtPokemon: response.data.caughtPokemon,
+          filterPokemon: response.data.pokemon,
+          filterCaughtPokemon: response.data.caughtPokemon,
         })
         console.log(response.data.pokemon)
       })
   }
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    }, this.handleFilter)
+  }
+
+  handleFilter = () => {
+    const filterCaughtPokemon = this.state.caughtPokemon.filter((e, i) => {
+      return e.name.includes(this.state.textBox)
+    })
+    const filterPokemon = this.state.pokemon.filter((e, i) => {
+      return e.name.includes(this.state.textBox)
+    })
+    this.setState({
+      filterCaughtPokemon,
+      filterPokemon
+    })
+  }
+
+  handleRelease = (id, name) => {
+    let doYou = window.confirm(`Do you reall want to say goodbye to ${name.charAt(0).toUpperCase()}${name.slice(1)} forever?`)
+    if (doYou) {
+      axios.delete(`/api/pokemon/?id=${id}`)
+        .then((response) => {
+          this.setState({
+            caughtPokemon: response.data,
+            filterCaughtPokemon: response.data
+          })
+          alert(`You'll never see ${name.charAt(0).toUpperCase()}${name.slice(1)} again...`)
+        })
+    }
+  }
+
   handleCatch = (id, name) => {
     let body = {
       id
@@ -27,33 +68,31 @@ export default class App extends Component {
     axios.post('/api/pokemon', body)
       .then((response) => {
         this.setState({
-          caughtPokemon: response.data
+          caughtPokemon: response.data,
+          filterCaughtPokemon: response.data
         })
+        swal(`You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}!`)
       })
-    console.log(`You caught ${name}`)
+    console.log(`You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}`)
   }
   handleToggle = () => {
-    if (this.state.showCaughtPokemon === this.state.caughtPokemon) {
-      this.setState({
-        showCaughtPokemon: this.state.pokemon
-      })
-    } else {
-      this.setState({
-        showCaughtPokemon: this.state.caughtPokemon
-      })
-    }
-    }
-  
+    this.setState({
+      showCaughtPokemon: !this.state.showCaughtPokemon,
+    })
+  }
+
   render() {
     return (
       <div className='App'>
-        <div>
+        <div className='header'>
           <button onClick={this.handleToggle}>Toggle</button>
+          <input type="text" placeholder='Search' name='textBox' value={this.state.textBox} onChange={this.handleChange} />
         </div>
-        {this.state.showCaughtPokemon ? <PokeCaughtLoop caughtPokemon={this.state.caughtPokemon}/> : <PokeLoop pokemon={this.state.pokemon}/>}
+        <div className='list'>
+          {this.state.showCaughtPokemon ? <PokeCaughtLoop handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} /> : <PokeLoop handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
+        </div>
 
       </div>
     )
   }
 }
-[PokeAppWithBackEnd]

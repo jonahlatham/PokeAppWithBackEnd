@@ -15,10 +15,6 @@ class PokeCaughtLoop extends Component {
                 </div>
                 <div className='boxInCard'>
                     <img src={e.sprites.front_default} alt='pokemon sprite' />
-                    <br />
-                    Height: {e.height}m
-                    <br />
-                    Weight: {e.weight}kg
               </div>
         <button onClick={() => { this.props.handleRelease(e.caughtId, e.name) }}>Release</button>
             </div>

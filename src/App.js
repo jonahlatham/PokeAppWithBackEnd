@@ -56,7 +56,7 @@ export default class App extends Component {
             caughtPokemon: response.data,
             filterCaughtPokemon: response.data
           })
-          alert(`You'll never see ${name.charAt(0).toUpperCase()}${name.slice(1)} again...`)
+          swal(`You'll never see ${name.charAt(0).toUpperCase()}${name.slice(1)} again...`)
         })
     }
   }
@@ -71,7 +71,9 @@ export default class App extends Component {
           caughtPokemon: response.data,
           filterCaughtPokemon: response.data
         })
-        swal(`You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}!`)
+        swal({icon: 'success',
+        title: `You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}!`,
+      button: false})
       })
     console.log(`You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}`)
   }
@@ -85,11 +87,18 @@ export default class App extends Component {
     return (
       <div className='App'>
         <div className='header'>
-          <button onClick={this.handleToggle}>Toggle</button>
-          <input type="text" placeholder='Search' name='textBox' value={this.state.textBox} onChange={this.handleChange} />
+          <div>
+            <img className='pkimg' src="https://bit.ly/2SllOXz" alt="Pokemon"/>
+          </div>
+          <div>
+            <button className='buttonToggle' onClick={this.handleToggle}>Toggle</button>
+            <input type="text" placeholder='Search' name='textBox' value={this.state.textBox} onChange={this.handleChange} />
+          </div>
         </div>
         <div className='list'>
-          {this.state.showCaughtPokemon ? <PokeCaughtLoop handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} /> : <PokeLoop handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
+          <div className='pokeList'>
+            {this.state.showCaughtPokemon ? <PokeCaughtLoop handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} /> : <PokeLoop handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
+          </div>
         </div>
 
       </div>

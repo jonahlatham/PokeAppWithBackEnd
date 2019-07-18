@@ -116,7 +116,7 @@ export default class App extends Component {
           </div>
         </div>
         <div>
-          <audio src='http://www.pokezorworld.com/anime/wav/themesong.wav' autoPlay/>
+          <audio src='http://www.pokezorworld.com/anime/wav/themesong.wav'controls loop autoPlay/>
         </div>
       </div>
     )

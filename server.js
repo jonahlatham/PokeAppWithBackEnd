@@ -44,8 +44,19 @@ app.post('/api/pokemon', (request, response, next) => {
         return r
     }, {}))
     pokemonToAdd.caughtId=caughtId
+    pokemonToAdd.isInDayCare=false
     caughtId++
     caughtPokemon.push(pokemonToAdd)
+    response.send(caughtPokemon)
+})
+
+app.put('/api/pokemon', (request, response, next)=>{
+    caughtPokemon = caughtPokemon.map((e,i)=>{
+        if(request.body.id === e.caughtId){
+            e.isInDayCare = !e.isInDayCare
+        }
+        return e
+    })
     response.send(caughtPokemon)
 })
 

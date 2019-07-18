@@ -3,6 +3,8 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const axios = require('axios')
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon'
+const path = require('path');
+require('dotenv').config()
 
 const app = express()
 app.use(cors())
@@ -10,6 +12,8 @@ app.use(bodyParser.json())
 let pokemon = []
 let caughtPokemon = []
 let caughtId = 1
+
+app.use(express.static(path.join(__dirname, '/build')));
 
 app.get('/api/pokemon/', (request, response, next) => {
     if (pokemon.length === 0) {
@@ -54,6 +58,12 @@ app.delete('/api/pokemon', (request, response, next)=>{
     })
     response.send(caughtPokemon)
 })
+
+app.get('/*', (req, res) => {
+    res.sendFile('index.html', {
+        root: path.join(__dirname, "build")
+    })
+});
 
 const port = process.env.PORT || 8090
 

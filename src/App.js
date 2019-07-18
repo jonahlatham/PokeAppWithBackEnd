@@ -3,7 +3,7 @@ import './App.css'
 import axios from 'axios'
 import PokeLoop from './PokeLoop/PokeLoop'
 import PokeCaughtLoop from './PokeCaughtLoop/PokeCaughtLoop'
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 
 export default class App extends Component {
@@ -48,17 +48,27 @@ export default class App extends Component {
   }
 
   handleRelease = (id, name) => {
-    let doYou = window.confirm(`Do you reall want to say goodbye to ${name.charAt(0).toUpperCase()}${name.slice(1)} forever?`)
-    if (doYou) {
-      axios.delete(`/api/pokemon/?id=${id}`)
-        .then((response) => {
-          this.setState({
-            caughtPokemon: response.data,
-            filterCaughtPokemon: response.data
-          })
-          swal(`You'll never see ${name.charAt(0).toUpperCase()}${name.slice(1)} again...`)
+    swal.fire({
+      title: `Do you really want to say goodbye to ${name.charAt(0).toUpperCase()}${name.slice(1)} forever?`,
+      text: 'You cannot revert this!!!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#f52e12',
+      cancelButtonColor: '#2562a0',
+      confirmButtonText: 'Yes, release it!'
+    })
+      .then((result) => {
+        if (result.value) {
+          return axios.delete(`/api/pokemon/?id=${id}`)
+        }
+      })
+      .then((response) => {
+        this.setState({
+          caughtPokemon: response.data,
+          filterCaughtPokemon: response.data
         })
-    }
+        swal.fire(`You'll never see ${name.charAt(0).toUpperCase()}${name.slice(1)} again...`)
+      })
   }
 
   handleCatch = (id, name) => {
@@ -71,9 +81,12 @@ export default class App extends Component {
           caughtPokemon: response.data,
           filterCaughtPokemon: response.data
         })
-        swal({icon: 'success',
-        title: `You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}!`,
-      button: false})
+        swal.fire({
+          title: `You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}!`,
+          text: `${name.charAt(0).toUpperCase()}${name.slice(1)} was sent to PC`,
+          type: 'success',
+          showConfirmButton: false
+        })
       })
     console.log(`You caught ${name.charAt(0).toUpperCase()}${name.slice(1)}`)
   }
@@ -87,20 +100,24 @@ export default class App extends Component {
     return (
       <div className='App'>
         <div className='header'>
-          <div>
-            <img className='pkimg' src="https://bit.ly/2SllOXz" alt="Pokemon"/>
-          </div>
-          <div>
+          <div className='togbtn'>
             <button className='buttonToggle' onClick={this.handleToggle}>Toggle</button>
-            <input type="text" placeholder='Search' name='textBox' value={this.state.textBox} onChange={this.handleChange} />
           </div>
+          <div>
+            <img className='pkimg' src="https://bit.ly/2SllOXz" alt="Pokemon" />
+          </div>
+          <div className='inpt'>
+            <input type="text" placeholder='Search' name='textBox' value={this.state.textBox} onChange={this.handleChange} />
+          </div> 
         </div>
         <div className='list'>
           <div className='pokeList'>
             {this.state.showCaughtPokemon ? <PokeCaughtLoop handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} /> : <PokeLoop handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
           </div>
         </div>
-
+        <div>
+          <audio src='http://www.pokezorworld.com/anime/wav/themesong.wav' autoPlay/>
+        </div>
       </div>
     )
   }

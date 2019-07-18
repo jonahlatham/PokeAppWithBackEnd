@@ -96,6 +96,30 @@ export default class App extends Component {
     })
   }
 
+  handleDayCare = (id, name) => {
+    let body = {
+      id
+    }
+    axios.put('/api/pokemon', body)
+      .then((response)=>{
+        this.setState({
+          caughtPokemon: response.data,
+          filterCaughtPokemon: response.data
+        })
+        const isAddToDayCare = response.data.reduce((r,e,i)=>{
+          if(e.caughtId === id){
+            r = e.isInDayCare
+          }
+            return r
+        },false)
+        swal.fire({
+          title: isAddToDayCare ? `${name.charAt(0).toUpperCase()}${name.slice(1)} was put in the daycare` : `${name.charAt(0).toUpperCase()}${name.slice(1)} was taken out of the daycare`,
+          type: 'success',
+          showConfirmButton: false
+        })
+      })
+  }
+
   render() {
     return (
       <div className='App'>
@@ -112,7 +136,7 @@ export default class App extends Component {
         </div>
         <div className='list'>
           <div className='pokeList'>
-            {this.state.showCaughtPokemon ? <PokeCaughtLoop handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} /> : <PokeLoop handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
+            {this.state.showCaughtPokemon ? <PokeCaughtLoop handleDayCare={this.handleDayCare} handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} /> : <PokeLoop handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
           </div>
         </div>
         <div>

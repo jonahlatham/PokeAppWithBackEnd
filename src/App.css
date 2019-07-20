@@ -122,3 +122,7 @@ button:focus {
   justify-content: flex-end;
   text-align: right;
 }
+
+audio:focus {
+  outline: none;
+}

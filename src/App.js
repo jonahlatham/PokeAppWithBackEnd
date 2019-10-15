@@ -24,6 +24,7 @@ export default class App extends Component {
           filterPokemon: response.data.pokemon,
           filterCaughtPokemon: response.data.caughtPokemon,
         })
+        
         console.log(response.data.pokemon)
       })
   }

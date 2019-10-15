@@ -17,7 +17,7 @@ class PokeCaughtLoop extends Component {
                     <img src={e.sprites.front_default} alt='pokemon sprite' />
               </div>
         <button onClick={() => { this.props.handleRelease(e.caughtId, e.name) }}>Release</button>
-        <button onClick={()=>{this.props.handleDayCare(e.caughtId, e.name)}}>{`${this.props.handleDayCare ? 'Take out of daycare' : 'Send to daycare'}`}</button>
+        <button onClick={()=>{this.props.handleDayCare(e.caughtId, e.name)}}>Send to daycare</button>
             </div>
         })
 

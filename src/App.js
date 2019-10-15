@@ -137,7 +137,7 @@ export default class App extends Component {
         </div>
         <div className='list'>
           <div className='pokeList'>
-            {this.state.showCaughtPokemon ? <PokeCaughtLoop handleDayCare={this.handleDayCare} handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} /> : <PokeLoop handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
+            {this.state.showCaughtPokemon ? <PokeCaughtLoop handleDayCare={this.handleDayCare} handleRelease={this.handleRelease} caughtPokemon={this.state.filterCaughtPokemon} isAddToDayCare={this.props.isAddToDayCare}/> : <PokeLoop isAddToDayCare={this.props.isAddToDayCare} handleCatch={this.handleCatch} pokemon={this.state.filterPokemon} />}
           </div>
         </div>
         <div>
